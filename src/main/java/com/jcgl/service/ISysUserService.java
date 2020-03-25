@@ -1,5 +1,7 @@
 package com.jcgl.service;
 
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+import com.github.pagehelper.PageInfo;
 import com.jcgl.entity.SysUser;
 import com.baomidou.mybatisplus.extension.service.IService;
 
@@ -12,5 +14,6 @@ import com.baomidou.mybatisplus.extension.service.IService;
  * @since 2020-03-24
  */
 public interface ISysUserService extends IService<SysUser> {
+
 
 }

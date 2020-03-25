@@ -1,6 +1,8 @@
 package com.jcgl.entity;
 
 import java.io.Serializable;
+
+import com.baomidou.mybatisplus.annotation.TableId;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.experimental.Accessors;
@@ -23,6 +25,7 @@ public class SysUser implements Serializable {
     /**
      * 用户编号
      */
+    @TableId
     private Integer userId;
 
     /**
@@ -45,5 +48,9 @@ public class SysUser implements Serializable {
      */
     private String userStatus;
 
-
+    public SysUser(Integer userId, String userName, String userStatus) {
+        this.userId = userId;
+        this.userName = userName;
+        this.userStatus = userStatus;
+    }
 }

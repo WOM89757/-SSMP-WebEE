@@ -1,4 +1,6 @@
+import com.jcgl.entity.SysUser;
 import com.jcgl.entity.TOrder;
+import com.jcgl.mapper.SysUserMapper;
 import com.jcgl.mapper.TOrderMapper;
 import org.apache.ibatis.session.SqlSession;
 import org.junit.Test;
@@ -7,6 +9,7 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 import javax.annotation.Resource;
+import java.util.UUID;
 
 /**
  * 测试DAO层的工作
@@ -20,7 +23,7 @@ import javax.annotation.Resource;
 @ContextConfiguration(locations={"classpath:applicationContext.xml"})
 public class MapperTest {
     @Resource
-    TOrderMapper tOrderMapper;
+   // SysUserMapper mapper;
 //    @Resource
     private SqlSession sqlSession;
     /**
@@ -31,7 +34,7 @@ public class MapperTest {
     public void testCRUD() {
        // System.out.println(tOrderMapper);
         //1.插入几个部门
-       // tOrderMapper.insert(new TOrder(1,1));
+       // tOrderMapper.insert(new SysUser(1,1));
 
       // departmentMapper.insertSelective(new Department(null, "开发部"));
 //        departmentMapper.insertSelective(new Department(null, "测试部"));
@@ -40,11 +43,11 @@ public class MapperTest {
         //employeeMapper.insertSelective(new Employee(null, "Jack", "M", "Jack@gmail.com", 1));
 
         //3.批量插入多个员工 使用可以执行批量操作的sqlsession
-//        EmployeeMapper mapper = sqlSession.getMapper(EmployeeMapper.class);
-//        for (int i = 0; i < 1000; i++) {
-//            String uid = UUID.randomUUID().toString().substring(0, 5) + i;
-//            mapper.insertSelective(new Employee(null, uid, "M",
-//                    uid + "@gmail.com", 1));
+        SysUserMapper mapper = sqlSession.getMapper(SysUserMapper.class);
+        for (int i = 0; i < 1000; i++) {
+           // UUID uid = UUID.randomUUID() ;
+            mapper.insert(new SysUser(i, i+ "@gmail.com", "可用"));
+        }
     }
 }
 

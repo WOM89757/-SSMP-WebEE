@@ -41,6 +41,20 @@
         <property name="dataSource" ref="pooledDataSource"/>
         <!--指定mybatis的mapper文件-->
         <property name="mapperLocations" value="classpath:mapper/*.xml"/>
+        <property name="plugins">
+            <array>
+                <!-- 分页插件配置 -->
+                <bean id="paginationInterceptor"
+                      class="com.baomidou.mybatisplus.extension.plugins.PaginationInterceptor">
+                </bean>
+            </array>
+        </property>
+
+
+    </bean>
+    <bean id="countSqlParser" class="com.baomidou.mybatisplus.extension.plugins.pagination.optimize.JsqlParserCountOptimize">
+        <!-- 设置为 true 可以优化部分 left join 的sql -->
+        <property name="optimizeJoin" value="true"/>
     </bean>
     <!--配置扫描器，将mybatis接口的实现加入到IOC容器中-->
 <!--    <mybatis:scan base-package="com.jcgl.mapper"/>-->
@@ -55,6 +69,7 @@
         <constructor-arg name="sqlSessionFactory" ref="sqlSessionFactory" />
         <constructor-arg name="executorType" value="BATCH"/>
     </bean>
+
 
     <!--============================事务控制========================-->
     <bean id="txManager" class="org.springframework.jdbc.datasource.DataSourceTransactionManager">

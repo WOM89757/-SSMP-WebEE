@@ -5,7 +5,18 @@
        xmlns:mybatis="http://mybatis.org/schema/mybatis-spring"
        xmlns:aop="http://www.springframework.org/schema/aop"
        xmlns:tx="http://www.springframework.org/schema/tx"
-       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd http://www.springframework.org/schema/context https://www.springframework.org/schema/context/spring-context.xsd http://mybatis.org/schema/mybatis-spring http://mybatis.org/schema/mybatis-spring.xsd http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx.xsd">
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+                            http://www.springframework.org/schema/beans/spring-beans.xsd
+                            http://www.springframework.org/schema/context
+                            https://www.springframework.org/schema/context/spring-context.xsd
+                            http://mybatis.org/schema/mybatis-spring
+                            http://mybatis.org/schema/mybatis-spring.xsd
+                            http://www.springframework.org/schema/tx
+                            http://www.springframework.org/schema/tx/spring-tx.xsd
+                            http://www.springframework.org/schema/aop
+                            http://www.springframework.org/schema/aop/spring-aop.xsd
+                             http://www.springframework.org/schema/context
+                             http://www.springframework.org/schema/context/spring-context.xsd">
 
     <context:component-scan base-package="com.jcgl">
         <!--除了Controller，其他业务逻辑都要扫描-->
@@ -30,6 +41,20 @@
         <property name="dataSource" ref="pooledDataSource"/>
         <!--指定mybatis的mapper文件-->
         <property name="mapperLocations" value="classpath:mapper/*.xml"/>
+        <property name="plugins">
+            <array>
+                <!-- 分页插件配置 -->
+                <bean id="paginationInterceptor"
+                      class="com.baomidou.mybatisplus.extension.plugins.PaginationInterceptor">
+                </bean>
+            </array>
+        </property>
+
+
+    </bean>
+    <bean id="countSqlParser" class="com.baomidou.mybatisplus.extension.plugins.pagination.optimize.JsqlParserCountOptimize">
+        <!-- 设置为 true 可以优化部分 left join 的sql -->
+        <property name="optimizeJoin" value="true"/>
     </bean>
     <!--配置扫描器，将mybatis接口的实现加入到IOC容器中-->
 <!--    <mybatis:scan base-package="com.jcgl.mapper"/>-->
@@ -44,6 +69,7 @@
         <constructor-arg name="sqlSessionFactory" ref="sqlSessionFactory" />
         <constructor-arg name="executorType" value="BATCH"/>
     </bean>
+
 
     <!--============================事务控制========================-->
     <bean id="txManager" class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
