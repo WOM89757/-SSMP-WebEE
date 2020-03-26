@@ -12,40 +12,50 @@
                     <div class="form-group">
                         <label class="col-sm-3 control-label">姓名</label>
                         <div class="col-sm-9">
-                            <input type="text" name="empName" class="form-control" id="empName_add_input" placeholder="姓名">
+                            <input type="text" name="userName" class="form-control" id="empName_add_input" placeholder="姓名">
                             <span class="help-block"></span>
                         </div>
                     </div>
+<%--                    <div class="form-group">--%>
+<%--                        <label class="col-sm-3 control-label">邮箱</label>--%>
+<%--                        <div class="col-sm-9">--%>
+<%--                            <input type="text" name="email" class="form-control" id="email_add_input" placeholder="email@gmail.com">--%>
+<%--                            <span class="help-block"></span>--%>
+<%--                        </div>--%>
+<%--                    </div>--%>
+<%--                    <div class="form-group">--%>
+<%--                        <label class="col-sm-3 control-label">性别</label>--%>
+<%--                        <div class="col-sm-6">--%>
+<%--                            <label class="radio-inline">--%>
+<%--                                <input type="radio" name="gender" id="gender1_add_input" value="M" checked="checked"> 男--%>
+<%--                            </label>--%>
+<%--                            <label class="radio-inline">--%>
+<%--                                <input type="radio" name="gender" id="gender2_add_input" value="F"> 女--%>
+<%--                            </label>--%>
+<%--                        </div>--%>
+<%--                    </div>--%>
                     <div class="form-group">
-                        <label class="col-sm-3 control-label">邮箱</label>
-                        <div class="col-sm-9">
-                            <input type="text" name="email" class="form-control" id="email_add_input" placeholder="email@gmail.com">
-                            <span class="help-block"></span>
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <label class="col-sm-3 control-label">性别</label>
-                        <div class="col-sm-6">
-                            <label class="radio-inline">
-                                <input type="radio" name="gender" id="gender1_add_input" value="M" checked="checked"> 男
-                            </label>
-                            <label class="radio-inline">
-                                <input type="radio" name="gender" id="gender2_add_input" value="F"> 女
-                            </label>
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <label class="col-sm-3 control-label">部门</label>
+                        <label class="col-sm-3 control-label">状态</label>
                         <div class="col-sm-9">
                             <%--部门信息 提交部门id即可--%>
-                            <select class="form-control" name="dId" id="dept_add_select"></select>
+                            <select class="form-control" name="userStatus" id="user_status_select">
+                                <option>可用</option>
+                                <option>禁用</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-3 control-label">学校</label>
+                        <div class="col-sm-9">
+                            <%--部门信息 提交部门id即可--%>
+                            <select class="form-control" name="schoolId" id="dept_add_select"></select>
                         </div>
                     </div>
                 </form>
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
-                <button type="button" class="btn btn-primary" id="emp_save_btn">保存</button>
+                <button type="button" class="btn btn-primary" id="user_save_btn">保存</button>
             </div>
         </div>
     </div>

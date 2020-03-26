@@ -93,9 +93,9 @@ $("#empName_add_input").keyup(function () {
 });
 
 //添加模态框 保存按钮 的鼠标监听
-$("#emp_save_btn").click(function () {
+$("#user_save_btn").click(function () {
     // 判断“用户名是否已被使用”的校验是否成功
-    if ($("#emp_save_btn").attr("ajax-va") == "error") {
+    if ($("#user_save_btn").attr("ajax-va") == "error") {
         return false;
     }
     // 前端校验输入的数据

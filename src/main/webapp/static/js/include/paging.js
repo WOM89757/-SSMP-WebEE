@@ -2,7 +2,7 @@
 function build_page_info(result) {
     $("#page_info_area").empty();
 
-    $("#page_info_area").append("当前第 " + result.extend.pageInfo.current + " 页，共 "
+    $("#page_info_area").append("当前第 " + result.extend.pageInfo.pageNum + " 页，共 "
         + result.extend.pageInfo.pages + " 页, 共 " + result.extend.pageInfo.total + " 条记录");
     totalRecord = result.extend.pageInfo.total;
     currentPage = result.extend.pageInfo.pageNum;
@@ -20,7 +20,7 @@ function build_page_nav(result) {
         prePageLi.addClass("disabled");
     }else {
         prePageLi.click(function () {
-            to_page(result.extend.pageInfo.current - 1);
+            to_page(result.extend.pageInfo.pageNum - 1);
         });
     }
 
@@ -35,7 +35,7 @@ function build_page_nav(result) {
         nextPageLi.addClass("disabled");
     }else {
         nextPageLi.click(function(){
-            to_page(result.extend.pageInfo.current + 1);
+            to_page(result.extend.pageInfo.pageNum + 1);
         });
     }
     //为元素添加单击监听事件
@@ -46,16 +46,16 @@ function build_page_nav(result) {
     // 添加 首页 和 前一页
     ul.append(firstPageLi).append(prePageLi);
     //创建导航数组naviganums
-    var naviganums;
-    if(result.extend.pageInfo.current == 1){
-        naviganums=[result.extend.pageInfo.current,result.extend.pageInfo.current+1,result.extend.pageInfo.current+2];
-    }else{
-        naviganums=[result.extend.pageInfo.current-1,result.extend.pageInfo.current,result.extend.pageInfo.current+1];
-    }
+    // var naviganums;
+    // if(result.extend.pageInfo.current == 1){
+    //     naviganums=[result.extend.pageInfo.current,result.extend.pageInfo.current+1,result.extend.pageInfo.current+2];
+    // }else{
+    //     naviganums=[result.extend.pageInfo.current-1,result.extend.pageInfo.current,result.extend.pageInfo.current+1];
+    // }
 
-    $.each(naviganums, function (index, item) {
+    $.each(result.extend.pageInfo.navigatepageNums, function (index, item) {
         var numLi = $("<li></li>").append($("<a></a>").append(item));
-        if (result.extend.pageInfo.current == item) {
+        if (result.extend.pageInfo.pageNum == item) {
             numLi.addClass("active");
         }
         numLi.click(function () {

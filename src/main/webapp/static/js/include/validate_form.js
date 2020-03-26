@@ -10,32 +10,32 @@ function validate_add_form() {
         show_validate_msg("#empName_add_input", "success", "");
     }
     //校验邮箱
-    var email = $("#email_add_input").val();
-    var regEmail = /^[a-zA-Z0-9_-]+@[a-zA-Z0-9_-]+(.[a-zA-Z0-9_-]+)+$/;
-    if (!regEmail.test(email)) {
-        show_validate_msg("#email_add_input", "error", "邮箱格式不正确");
-        return false;
-    } else {
-        show_validate_msg("#email_add_input", "success", "");
-    }
-    return true;
+    // var email = $("#email_add_input").val();
+    // var regEmail = /^[a-zA-Z0-9_-]+@[a-zA-Z0-9_-]+(.[a-zA-Z0-9_-]+)+$/;
+    // if (!regEmail.test(email)) {
+    //     show_validate_msg("#email_add_input", "error", "邮箱格式不正确");
+    //     return false;
+    // } else {
+    //     show_validate_msg("#email_add_input", "success", "");
+    // }
+     return true;
 }
 
 // ajax校验员工名
 function validate_empName(ele) {
     //发送ajax请求校验用户名是否可用
-    var empName = $(ele).val();
+    var userName = $(ele).val();
     $.ajax({
         url: "checkUser",
-        data: "empName=" + empName,
+        data: "userName=" + userName,
         type: "POST",
         success: function (result) {
             if (result.message == "success") {
                 show_validate_msg(ele, "success", "该姓名可用");
-                $("#emp_save_btn").attr("ajax-va", "success");
+                $("#user_save_btn").attr("ajax-va", "success");
             } else if (result.message == "error") {
                 show_validate_msg(ele, "error", result.extend.va_msg);
-                $("#emp_save_btn").attr("ajax-va", "error");
+                $("#user_save_btn").attr("ajax-va", "error");
             }
         }
     });
@@ -77,7 +77,7 @@ function getEmp(id) {
             $("#empName_update_static").text(userData.userName);
             $("#email_update_input").val(userData.email);
             $("#empUpdateModal input[name=gender]").val([userData.gender]);
-            $("#dept_update_select").val([userData.schoolId]);
+            $("#dept_update_select").val([userData.schoolName]);
         }
     });
 }
@@ -87,13 +87,13 @@ function getDepts(ele) {
     //清空之前下拉列表的值
     $(ele).empty();
     $.ajax({
-        url: "depts",
+        url: "schools",
         type: "GET",
         success: function (result) {
             //在下拉列表中显示部门信息
-            $.each(result.extend.depts, function () {
+            $.each(result.extend.schoolList, function () {
                 var optionEle = $("<option></option>")
-                    .append(this.deptName).attr("value", this.deptId);
+                    .append(this.schoolName).attr("value", this.schoolId);
                 optionEle.appendTo(ele);
             })
         }
@@ -104,14 +104,15 @@ function getDepts(ele) {
 function post_emp_form() {
     //模态框中填写的表单数据提交给服务器进行保存
     $.ajax({
-        url: "emp",
+        url: "user",
         type: "POST",
-        data: $("#empAddModal form").serialize(),
+        data: $("#userAddModal form").serialize(),
         success: function (result) {
+            console.log(result)
             //后端校验成功
             if (result.message == "success") {
                 //员工保存成功后，关闭模态框
-                $('#empAddModal').modal('hide');
+                $('#userAddModal').modal('hide');
                 // 将总记录数作为请求页码（mybatisConfig.xml中配置了相关属性，能保证获取最后一页信息）
                 to_page(totalRecord);
             }
@@ -126,7 +127,7 @@ function post_emp_form() {
             }
             if (result.extend.va_msg != undefined) {
                 show_validate_msg("#empName_add_input", "error", result.extend.va_msg);
-                $("#emp_save_btn").attr("ajax-va", "error");
+                $("#user_save_btn").attr("ajax-va", "error");
             }
         }
     });

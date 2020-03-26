@@ -1,11 +1,14 @@
 package com.jcgl.entity;
 
-import java.io.Serializable;
-
+import com.baomidou.mybatisplus.annotation.IdType;
+import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableId;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.experimental.Accessors;
+
+import javax.validation.constraints.Pattern;
+import java.io.Serializable;
 
 /**
  * <p>
@@ -25,7 +28,9 @@ public class SysUser implements Serializable {
     /**
      * 用户编号
      */
-    @TableId
+    @TableId(type = IdType.AUTO)
+    @Pattern(regexp = "^([a-zA-Z0-9_-]{6,16})|(^[\u4e00-\u9fa5]{2,5})$",
+            message = "姓名必须为6-16位数字和字母的组合 或 2-5位中文")
     private Integer userId;
 
     /**
@@ -47,10 +52,55 @@ public class SysUser implements Serializable {
      * 用户状态
      */
     private String userStatus;
+    /**
+     * 学校实体
+     */
+    @TableField(exist = false)
+    private SysSchool school;
+
+    @TableField(exist = false)
+    private String schoolName;
+
+    public String getSchoolName() {
+        return schoolName;
+    }
+
+    public void setSchoolName(String schoolName) {
+        this.schoolName = schoolName;
+    }
+
+    public SysSchool getSchool() {
+        return school;
+    }
+
+    public void setSchool(SysSchool school) {
+        this.school = school;
+    }
+
+    public SysUser(String userName, String userStatus) {
+        this.userName = userName;
+        this.userStatus = userStatus;
+    }
+
+    public SysUser(Integer schoolId, Integer roleId, String userName, String userStatus) {
+        this.schoolId = schoolId;
+        this.roleId = roleId;
+        this.userName = userName;
+        this.userStatus = userStatus;
+    }
 
     public SysUser(Integer userId, String userName, String userStatus) {
         this.userId = userId;
         this.userName = userName;
         this.userStatus = userStatus;
+    }
+
+    public SysUser(Integer userId, Integer schoolId, Integer roleId, String userName, String userStatus, String schoolName) {
+        this.userId = userId;
+        this.schoolId = schoolId;
+        this.roleId = roleId;
+        this.userName = userName;
+        this.userStatus = userStatus;
+        this.schoolName = schoolName;
     }
 }

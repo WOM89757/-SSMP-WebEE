@@ -2,7 +2,7 @@
 function build_user_table(result) {
     //先清空table表格
     $("#users_table tbody").empty();
-    var users = result.extend.pageInfo.records;
+    var users = result.extend.pageInfo.list;
     $.each(users, function (index, item) {
         var checkBoxTd = $("<td><input type='checkbox' class='check_item'/></td>");
         var empIdTd = $("<td></td>").append(item.userId);
@@ -10,6 +10,7 @@ function build_user_table(result) {
         var genderTd = $("<td></td>").append(item.gender == "M" ? "男" : "女");
         var emailTd = $("<td></td>").append(item.email);
        // var deptNameTd = $("<td></td>").append(item.department.deptName);
+        var schoolNameTd = $("<td></td>").append(item.schoolName);
         var editBtn = $("<button></button>").addClass("btn btn-primary btn-sm edit_btn")
             .append($("<span></span>").addClass("glyphicon glyphicon-pencil")).append("编辑");
         // 为编辑按钮添加自定义的属性，来表示当前员工的id
@@ -23,6 +24,7 @@ function build_user_table(result) {
         $("<tr></tr>").append(checkBoxTd).append(empIdTd).append(empNameTd)
             .append(genderTd).append(emailTd)
             // .append(deptNameTd)
+            .append(schoolNameTd)
             .append(btnTd).appendTo("#users_table tbody");
     });
 }

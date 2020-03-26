@@ -1,9 +1,13 @@
 package com.jcgl.mapper;
 
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.jcgl.entity.SysUser;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
+import org.apache.ibatis.annotations.Select;
+
+import java.util.List;
 
 /**
  * <p>
@@ -25,5 +29,22 @@ public interface SysUserMapper extends BaseMapper<SysUser> {
      * @return 分页对象
      */
     IPage<SysUser> selectPageVo(Page<?> page, Integer state);
+
+    /**
+     *
+     * @param example
+     * @return
+     */
+    //List<Employee> selectByExampleWithDept(EmployeeExample example);
+
+    SysUser selectByPrimaryKeyWithDept(Integer userId);
+
+    @Select("SELECT sys_user.*,sys_school.school_name FROM sys_user LEFT JOIN sys_school on sys_user.school_id=sys_school.school_id")
+
+    List<SysUser> getUserSchool();
+
+    List<SysUser> selectByExampleWithSchool(QueryWrapper queryWrapper);
+
+    SysUser selectByPrimaryKeyWithSchool(Integer empId);
 
 }
