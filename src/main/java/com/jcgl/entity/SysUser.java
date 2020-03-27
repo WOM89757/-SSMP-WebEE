@@ -29,8 +29,6 @@ public class SysUser implements Serializable {
      * 用户编号
      */
     @TableId(type = IdType.AUTO)
-    @Pattern(regexp = "^([a-zA-Z0-9_-]{6,16})|(^[\u4e00-\u9fa5]{2,5})$",
-            message = "姓名必须为6-16位数字和字母的组合 或 2-5位中文")
     private Integer userId;
 
     /**
@@ -46,17 +44,16 @@ public class SysUser implements Serializable {
     /**
      * 用户名称
      */
+    @Pattern(regexp = "^([a-zA-Z0-9_-]{6,16})|(^[\u4e00-\u9fa5]{2,5})$",
+            message = "姓名必须为6-16位数字和字母的组合 或 2-5位中文")
     private String userName;
 
     /**
      * 用户状态
      */
+
     private String userStatus;
-    /**
-     * 学校实体
-     */
-    @TableField(exist = false)
-    private SysSchool school;
+
 
     @TableField(exist = false)
     private String schoolName;
@@ -69,28 +66,16 @@ public class SysUser implements Serializable {
         this.schoolName = schoolName;
     }
 
-    public SysSchool getSchool() {
-        return school;
+
+
+    public SysUser() {
     }
 
-    public void setSchool(SysSchool school) {
-        this.school = school;
-    }
 
-    public SysUser(String userName, String userStatus) {
-        this.userName = userName;
-        this.userStatus = userStatus;
-    }
-
-    public SysUser(Integer schoolId, Integer roleId, String userName, String userStatus) {
+    public SysUser(Integer userId, Integer schoolId, Integer roleId, String userName, String userStatus) {
+        this.userId = userId;
         this.schoolId = schoolId;
         this.roleId = roleId;
-        this.userName = userName;
-        this.userStatus = userStatus;
-    }
-
-    public SysUser(Integer userId, String userName, String userStatus) {
-        this.userId = userId;
         this.userName = userName;
         this.userStatus = userStatus;
     }

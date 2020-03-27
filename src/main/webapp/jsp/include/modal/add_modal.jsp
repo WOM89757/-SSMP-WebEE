@@ -39,8 +39,8 @@
                         <div class="col-sm-9">
                             <%--部门信息 提交部门id即可--%>
                             <select class="form-control" name="userStatus" id="user_status_select">
-                                <option>可用</option>
-                                <option>禁用</option>
+                                <option value="可用">可用</option>
+                                <option value="禁用">禁用</option>
                             </select>
                         </div>
                     </div>

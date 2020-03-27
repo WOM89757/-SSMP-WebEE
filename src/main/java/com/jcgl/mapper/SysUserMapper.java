@@ -1,10 +1,13 @@
 package com.jcgl.mapper;
 
+import com.baomidou.mybatisplus.core.conditions.Wrapper;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
+import com.baomidou.mybatisplus.core.toolkit.Constants;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.jcgl.entity.SysUser;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
+import org.apache.ibatis.annotations.Param;
 import org.apache.ibatis.annotations.Select;
 
 import java.util.List;
@@ -39,9 +42,10 @@ public interface SysUserMapper extends BaseMapper<SysUser> {
 
     SysUser selectByPrimaryKeyWithDept(Integer userId);
 
-    @Select("SELECT sys_user.*,sys_school.school_name FROM sys_user LEFT JOIN sys_school on sys_user.school_id=sys_school.school_id")
-
-    List<SysUser> getUserSchool();
+    @Select("SELECT sys_user.*,sys_school.school_name FROM sys_user LEFT JOIN sys_school on sys_user.school_id=sys_school.school_id ${ew.customSqlSegment}")
+    List<SysUser> getUserSchool(@Param(Constants.WRAPPER) Wrapper<SysUser> queryWrapper);
+    @Select("SELECT sys_user.*,sys_school.school_name FROM sys_user LEFT JOIN sys_school on sys_user.school_id=sys_school.school_id ${ew.customSqlSegment}")
+    SysUser getUserBYIdWithSchool(@Param(Constants.WRAPPER) Wrapper<SysUser> queryWrapper);
 
     List<SysUser> selectByExampleWithSchool(QueryWrapper queryWrapper);
 

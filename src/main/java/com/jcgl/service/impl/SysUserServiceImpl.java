@@ -27,10 +27,15 @@ public class SysUserServiceImpl extends ServiceImpl<SysUserMapper, SysUser> impl
     SysUserMapper userMapper;
 
 
-    public PageInfo<SysUser> getUserSchool(Integer pageNum) {
+    public PageInfo<SysUser> getUserSchool(Integer pageNum,Wrapper<SysUser> wrapper) {
         //设置分页
         PageHelper.startPage(pageNum, 10);
-        return new PageInfo<SysUser>(this.userMapper.getUserSchool());
+        return new PageInfo<SysUser>(this.userMapper.getUserSchool(wrapper));
+    }
+
+    @Override
+    public SysUser getByIdWithSchool(Wrapper<SysUser> wrapper) {
+        return this.userMapper.getUserBYIdWithSchool(wrapper);
     }
 
     @Override
@@ -43,13 +48,14 @@ public class SysUserServiceImpl extends ServiceImpl<SysUserMapper, SysUser> impl
     @Override
     public boolean checkUser(String userName) {
         //查询符合条件的记录数，如果没有 返回 0；如果有 返回对应的数量
-        long count = userMapper.selectCount((Wrapper<SysUser>) new  QueryWrapper().eq("user_name","userName"));
+        long count = userMapper.selectCount((Wrapper<SysUser>) new  QueryWrapper().eq("user_name",userName));
         return count == 0;
     }
 
     @Override
     public void saveUser(SysUser sysUser) {
-        userMapper.insert(sysUser);
+        int i  = userMapper.insert(sysUser);
+        System.out.println(i);
     }
 
 

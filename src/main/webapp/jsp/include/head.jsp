@@ -1,5 +1,5 @@
 <%@ page contentType="text/html;charset=UTF-8" %>
-<title>增删改查小项目</title>
+<title>中小学教材智能匹配系统</title>
 <% pageContext.setAttribute("APP_PATH", request.getContextPath());%>
 <%--引入jQuery--%>
 <script type="text/javascript" src="${APP_PATH}/static/js/jquery-3.2.1.min.js"></script>

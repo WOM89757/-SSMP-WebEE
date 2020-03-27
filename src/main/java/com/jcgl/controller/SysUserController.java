@@ -1,12 +1,12 @@
 package com.jcgl.controller;
 
 
+import com.baomidou.mybatisplus.core.conditions.Wrapper;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.github.pagehelper.PageInfo;
 import com.jcgl.entity.SysUser;
-import com.jcgl.mapper.SysUserMapper;
 import com.jcgl.service.ISysUserService;
 import com.jcgl.utils.Message;
 
@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
 import javax.validation.Valid;
+
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -35,6 +36,22 @@ public class SysUserController {
     ISysUserService iSysUserService;
 
     /**
+     * 更新员工信息
+     *
+     * @param sysUser 传入的员工对象
+     * @return 成功信息
+     */
+    //占位符{userId}和 传入的对象中的 变量名相同时，才会作为对象的属性传入
+    @RequestMapping(value = "/user/{userId}", method = RequestMethod.PUT)
+    @ResponseBody
+    public Message updateEmp(SysUser sysUser) {
+        iSysUserService.updateById(sysUser);
+        System.err.println("success");
+        return Message.success();
+    }
+
+
+    /**
      * 查询用户信息(分页查询）
      * @return
      */
@@ -42,7 +59,7 @@ public class SysUserController {
     public Message getUsers(@RequestParam(value = "pageNum",defaultValue = "1")Integer pageNum  ){
 
        // PageInfo<SysUser> pageInfo = iSysUserService.getAll(pageNum);
-        PageInfo<SysUser> pageInfo = iSysUserService.getUserSchool(pageNum);
+        PageInfo<SysUser> pageInfo = iSysUserService.getUserSchool(pageNum,new  QueryWrapper().orderBy(true,false,"user_id"));
         return Message.success().add("pageInfo", pageInfo);
     }
     /**
@@ -54,7 +71,8 @@ public class SysUserController {
     @RequestMapping(value = "/user/{id}", method = RequestMethod.GET)
     @ResponseBody
     public Message getEmp(@PathVariable("id") Integer id) {
-        SysUser user = iSysUserService.getById(id);
+
+        SysUser user = iSysUserService.getByIdWithSchool( (Wrapper<SysUser>) new  QueryWrapper().eq("user_id",id));
         return Message.success().add("user", user);
     }
     /**
@@ -66,8 +84,8 @@ public class SysUserController {
     @RequestMapping(value = "/user", method = RequestMethod.POST)
     // 由于表单传输的标签内容，标签的name都和sysUser的属性名相同，因此参数可以直接传对象
     @ResponseBody
-    public Message saveEmp(@Valid SysUser sysUser,BindingResult result) {
-        System.out.println("sysUser");
+    public Message saveEmp(@Valid SysUser sysUser, BindingResult result) {
+
         //校验失败
         if (result.hasErrors()) {
             Map<String, Object> map = new HashMap<String, Object>();
@@ -85,16 +103,16 @@ public class SysUserController {
         if (!usable) {
             return Message.fail().add("va_msg", "该姓名已被使用");
         }
-        System.out.println(sysUser);
 
-        iSysUserService.saveUser(sysUser);
+       // iSysUserService.saveUser(sysUser);
+        boolean i = iSysUserService.save(sysUser);
         return Message.success();
     }
     /**
      * 删除员工（单个删除、批量删除都处理）
      */
 
-    @RequestMapping(value = "/emp/{id}", method = RequestMethod.DELETE)
+    @RequestMapping(value = "/user/{id}", method = RequestMethod.DELETE)
     @ResponseBody
     public Message deleteEmpById(@PathVariable("id") String ids) {
 

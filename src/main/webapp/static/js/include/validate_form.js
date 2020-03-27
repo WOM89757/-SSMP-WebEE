@@ -75,9 +75,11 @@ function getEmp(id) {
         success: function (result) {
             var userData = result.extend.user;
             $("#empName_update_static").text(userData.userName);
-            $("#email_update_input").val(userData.email);
-            $("#empUpdateModal input[name=gender]").val([userData.gender]);
-            $("#dept_update_select").val([userData.schoolName]);
+            // $("#email_update_input").val(userData.email);
+            // $("#empUpdateModal input[name=gender]").val([userData.gender]);
+
+            // $("#dept_update_select").val([userData.schoolName]);
+            $("#dept_update_select").val(userData.schoolId);
         }
     });
 }
@@ -103,12 +105,14 @@ function getDepts(ele) {
 //上传 新增员工 表单
 function post_emp_form() {
     //模态框中填写的表单数据提交给服务器进行保存
+    console.log($("#userAddModal form").serialize())
     $.ajax({
         url: "user",
         type: "POST",
         data: $("#userAddModal form").serialize(),
+
         success: function (result) {
-            console.log(result)
+
             //后端校验成功
             if (result.message == "success") {
                 //员工保存成功后，关闭模态框
@@ -136,7 +140,7 @@ function post_emp_form() {
 //上传 更新员工 表单
 function update_emp_form() {
     $.ajax({
-        url: "emp/" + $("#emp_update_btn").attr("edit-id"),
+        url: "user/" + $("#emp_update_btn").attr("edit-id"),
         type: "PUT",
         data: $("#empUpdateModal form").serialize(),
         success: function () {
@@ -164,7 +168,7 @@ function delete_emp(empId) {
 // 发送批量删除员工请求
 function delete_emps(del_idstr){
     $.ajax({
-        url: "emp/" + del_idstr,
+        url: "user/" + del_idstr,
         type: "DELETE",
         success: function () {
             alert("删除成功");

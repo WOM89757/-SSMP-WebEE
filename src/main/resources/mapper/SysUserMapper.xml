@@ -8,13 +8,14 @@
         <result column="role_id" jdbcType="INTEGER" property="roleId" />
         <result column="user_name" jdbcType="VARCHAR" property="userName" />
         <result column="user_status" jdbcType="VARCHAR" property="userStatus" />
+        <result column="school_name" jdbcType="VARCHAR" property="schoolName" />
         <!--指定联合查询出的部门字段的封装-->
-        <association property="SysSchool" javaType="com.jcgl.entity.SysSchool">
-                <id column="school_id" jdbcType="INTEGER" property="schoolId" />
-                <result column="school_type" jdbcType="INTEGER" property="schoolType" />
-                <result column="school_name" jdbcType="VARCHAR" property="schoolName" />
-                <result column="school_alias" jdbcType="VARCHAR" property="schoolAlias" />
-        </association>
+<!--        <association property="SysSchool" javaType="com.jcgl.entity.SysSchool">-->
+<!--                <id column="school_id" jdbcType="INTEGER" property="schoolId" />-->
+<!--                <result column="school_type" jdbcType="INTEGER" property="schoolType" />-->
+<!--                <result column="school_name" jdbcType="VARCHAR" property="schoolName" />-->
+<!--                <result column="school_alias" jdbcType="VARCHAR" property="schoolAlias" />-->
+<!--        </association>-->
     </resultMap>
 
     <!--自定义 带部门信息查询-->
@@ -27,7 +28,7 @@
         <if test="distinct">
             DISTINCT
         </if>
-        <include refid="WithSchool_Column_List"/>
+        u.user_id, u.school_id, u.role_id, u.user_name, u.user_status,s.school_name
         FROM sys_user u LEFT JOIN sys_school s
         ON u.school_id = s.school_id
         <if test="_parameter != null">

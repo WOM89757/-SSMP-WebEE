@@ -1,3 +1,5 @@
+import com.baomidou.mybatisplus.core.conditions.Wrapper;
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.github.pagehelper.PageInfo;
@@ -6,6 +8,7 @@ import com.jcgl.entity.TOrder;
 import com.jcgl.mapper.SysUserMapper;
 import com.jcgl.mapper.TOrderMapper;
 import com.jcgl.service.ISysUserService;
+import lombok.extern.slf4j.Slf4j;
 import org.apache.ibatis.session.SqlSession;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -31,6 +34,7 @@ public class MapperTest {
     SysUserMapper mapper;
 //    @Resource
     private SqlSession sqlSession;
+    @Resource
     ISysUserService iSysUserService;
     /**
      * 测试DepartmentMapper
@@ -52,7 +56,7 @@ public class MapperTest {
        // SysUserMapper mapper = sqlSession.getMapper(SysUserMapper.class);
         for (int i = 0; i < 1000; i++) {
            // UUID uid = UUID.randomUUID() ;
-            mapper.insert(new SysUser( 1,1,i+ "username", "可用"));
+            //mapper.insert(new SysUser( 1,1,i+ "username", "可用"));
         }
     }
     @Test
@@ -62,12 +66,19 @@ public class MapperTest {
 //        PageInfo pageInfo = new PageInfo<SysUser>(listInfo);
         //PageInfo<SysUser> pageInfo = iSysUserService.getUserSchool(1);
 
-        //测试
+        //测试 级联查询 自定义映射 发现无法找到对应实体属性，待调试
          List listInfo = mapper.selectByExampleWithSchool(null);
+         System.out.println(listInfo);
         PageInfo pageInfo = new PageInfo<SysUser>(listInfo);
 
 
 
+    }
+    @Test
+    public void testCheckout(){
+      // System.out.println(mapper.selectCount((Wrapper<SysUser>) new QueryWrapper().eq("user_name","adminpa")));
+        //System.out.println(iSysUserService.checkUser("adminpa"));
+        System.out.println(iSysUserService.getByIdWithSchool( (Wrapper<SysUser>) new QueryWrapper().eq("user_id",1027)));
     }
 }
 

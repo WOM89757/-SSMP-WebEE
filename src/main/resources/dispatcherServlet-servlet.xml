@@ -24,4 +24,5 @@
     <!--能支持springMVC更高级一些的功能，映射动态请求，JSR303校验，快捷的AJAX请求，....-->
     <mvc:annotation-driven/>
 
+
 </beans>

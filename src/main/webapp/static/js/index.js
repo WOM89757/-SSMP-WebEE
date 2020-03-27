@@ -113,12 +113,12 @@ $("#emp_update_btn").click(function () {
     //校验邮箱
     var email = $("#email_update_input").val();
     var regEmail = /^[a-zA-Z0-9_-]+@[a-zA-Z0-9_-]+(.[a-zA-Z0-9_-]+)+$/;
-    if (!regEmail.test(email)) {
-        show_validate_msg("#email_update_input", "error", "邮箱格式不正确");
-        return false;
-    } else {
-        show_validate_msg("#email_update_input", "success", "");
-    }
+    // if (!regEmail.test(email)) {
+    //     show_validate_msg("#email_update_input", "error", "邮箱格式不正确");
+    //     return false;
+    // } else {
+    //     show_validate_msg("#email_update_input", "success", "");
+    // }
 
     //更新表单数据
     update_emp_form();
