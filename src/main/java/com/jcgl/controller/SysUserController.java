@@ -10,6 +10,8 @@ import com.jcgl.entity.SysUser;
 import com.jcgl.service.ISysUserService;
 import com.jcgl.utils.Message;
 
+import com.sun.media.jfxmedia.logging.Logger;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.FieldError;
 import org.springframework.web.bind.annotation.*;
@@ -30,6 +32,7 @@ import java.util.Map;
  * @author wom
  * @since 2020-03-24
  */
+@Slf4j
 @RestController
 public class SysUserController {
     @Resource
@@ -59,7 +62,7 @@ public class SysUserController {
     public Message getUsers(@RequestParam(value = "pageNum",defaultValue = "1")Integer pageNum  ){
 
        // PageInfo<SysUser> pageInfo = iSysUserService.getAll(pageNum);
-        PageInfo<SysUser> pageInfo = iSysUserService.getUserSchool(pageNum,new  QueryWrapper().orderBy(true,false,"user_id"));
+        PageInfo pageInfo = iSysUserService.getUserSchool(pageNum,new  QueryWrapper().orderBy(true,true,"user_id"));
         return Message.success().add("pageInfo", pageInfo);
     }
     /**
@@ -72,7 +75,9 @@ public class SysUserController {
     @ResponseBody
     public Message getEmp(@PathVariable("id") Integer id) {
 
-        SysUser user = iSysUserService.getByIdWithSchool( (Wrapper<SysUser>) new  QueryWrapper().eq("user_id",id));
+
+        SysUser user =iSysUserService.selectLinkById(id);
+        log.info("user: {}",user);
         return Message.success().add("user", user);
     }
     /**
@@ -104,8 +109,7 @@ public class SysUserController {
             return Message.fail().add("va_msg", "该姓名已被使用");
         }
 
-       // iSysUserService.saveUser(sysUser);
-        boolean i = iSysUserService.save(sysUser);
+        iSysUserService.save(sysUser);
         return Message.success();
     }
     /**

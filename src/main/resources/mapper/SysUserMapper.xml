@@ -8,15 +8,23 @@
         <result column="role_id" jdbcType="INTEGER" property="roleId" />
         <result column="user_name" jdbcType="VARCHAR" property="userName" />
         <result column="user_status" jdbcType="VARCHAR" property="userStatus" />
-        <result column="school_name" jdbcType="VARCHAR" property="schoolName" />
-        <!--指定联合查询出的部门字段的封装-->
-<!--        <association property="SysSchool" javaType="com.jcgl.entity.SysSchool">-->
-<!--                <id column="school_id" jdbcType="INTEGER" property="schoolId" />-->
-<!--                <result column="school_type" jdbcType="INTEGER" property="schoolType" />-->
-<!--                <result column="school_name" jdbcType="VARCHAR" property="schoolName" />-->
-<!--                <result column="school_alias" jdbcType="VARCHAR" property="schoolAlias" />-->
-<!--        </association>-->
+        <association property="sysSchool" column="school_id"
+                     select="com.jcgl.mapper.SysSchoolMapper.selectById"/>
+        <collection property="sysRole" column="role_id"
+                    select="com.jcgl.mapper.SysRoleMapper.selectById"/>
     </resultMap>
+
+
+    <select id="selectLinkById" resultMap="WithschoolResultMap">
+        select *
+        from sys_user
+        where user_id = #{id}
+    </select>
+    <select id="getUserSchool" resultMap="WithschoolResultMap">
+        select *
+        from sys_user
+       ${ew.customSqlSegment}
+    </select>
 
     <!--自定义 带部门信息查询-->
     <sql id="WithSchool_Column_List">
@@ -37,6 +45,7 @@
         <if test="orderByClause != null">
             order by ${orderByClause}
         </if>
+
     </select>
     <select id="selectByPrimaryKeyWithSchool" resultMap="WithschoolResultMap">
         SELECT

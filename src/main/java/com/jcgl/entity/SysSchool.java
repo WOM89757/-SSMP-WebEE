@@ -1,6 +1,10 @@
 package com.jcgl.entity;
 
 import java.io.Serializable;
+
+import com.baomidou.mybatisplus.annotation.IdType;
+import com.baomidou.mybatisplus.annotation.TableId;
+import com.sun.deploy.security.ValidationState;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.experimental.Accessors;
@@ -23,6 +27,7 @@ public class SysSchool implements Serializable {
     /**
      * 学校编号
      */
+    @TableId(type = IdType.AUTO)
     private Integer schoolId;
 
     /**

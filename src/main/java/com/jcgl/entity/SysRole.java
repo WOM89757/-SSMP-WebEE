@@ -1,6 +1,9 @@
 package com.jcgl.entity;
 
 import java.io.Serializable;
+
+import com.baomidou.mybatisplus.annotation.TableId;
+import com.baomidou.mybatisplus.annotation.TableName;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.experimental.Accessors;
@@ -23,6 +26,7 @@ public class SysRole implements Serializable {
     /**
      * 角色编号
      */
+    @TableId
     private Integer roleId;
 
     /**

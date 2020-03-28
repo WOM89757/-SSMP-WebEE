@@ -27,24 +27,33 @@ public class SysUserServiceImpl extends ServiceImpl<SysUserMapper, SysUser> impl
     SysUserMapper userMapper;
 
 
+    /**
+     * 通过Id查询用户及学校角色信息
+     * @param id
+     * @return
+     */
+    @Override
+    public SysUser selectLinkById(Integer id) {
+        return  userMapper.selectLinkById(id);
+    }
+
+    /**
+     * 获取用户信息及其学校和角色信息
+     * @param pageNum 查询页码数
+     * @param wrapper 查询条件
+     * @return    页面信息
+     */
     public PageInfo<SysUser> getUserSchool(Integer pageNum,Wrapper<SysUser> wrapper) {
         //设置分页
         PageHelper.startPage(pageNum, 10);
         return new PageInfo<SysUser>(this.userMapper.getUserSchool(wrapper));
     }
 
-    @Override
-    public SysUser getByIdWithSchool(Wrapper<SysUser> wrapper) {
-        return this.userMapper.getUserBYIdWithSchool(wrapper);
-    }
-
-    @Override
-    public PageInfo<SysUser> getAll(Integer pageNum) {
-        //设置分页
-        PageHelper.startPage(pageNum, 10);
-        return new PageInfo<SysUser>(this.baseMapper.selectList(null), 5);
-    }
-
+    /**
+     * 检查用户名是否存在
+     * @param userName
+     * @return
+     */
     @Override
     public boolean checkUser(String userName) {
         //查询符合条件的记录数，如果没有 返回 0；如果有 返回对应的数量
@@ -52,11 +61,6 @@ public class SysUserServiceImpl extends ServiceImpl<SysUserMapper, SysUser> impl
         return count == 0;
     }
 
-    @Override
-    public void saveUser(SysUser sysUser) {
-        int i  = userMapper.insert(sysUser);
-        System.out.println(i);
-    }
 
 
 }

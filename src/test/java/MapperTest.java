@@ -66,10 +66,7 @@ public class MapperTest {
 //        PageInfo pageInfo = new PageInfo<SysUser>(listInfo);
         //PageInfo<SysUser> pageInfo = iSysUserService.getUserSchool(1);
 
-        //测试 级联查询 自定义映射 发现无法找到对应实体属性，待调试
-         List listInfo = mapper.selectByExampleWithSchool(null);
-         System.out.println(listInfo);
-        PageInfo pageInfo = new PageInfo<SysUser>(listInfo);
+
 
 
 
@@ -78,7 +75,8 @@ public class MapperTest {
     public void testCheckout(){
       // System.out.println(mapper.selectCount((Wrapper<SysUser>) new QueryWrapper().eq("user_name","adminpa")));
         //System.out.println(iSysUserService.checkUser("adminpa"));
-        System.out.println(iSysUserService.getByIdWithSchool( (Wrapper<SysUser>) new QueryWrapper().eq("user_id",1027)));
+       // System.out.println(iSysUserService.getByIdWithSchool( (Wrapper<SysUser>) new QueryWrapper().eq("user_id",1027)));
+        System.out.println(iSysUserService.selectLinkById( 1027));
     }
 }
 

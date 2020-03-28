@@ -3,6 +3,7 @@ package com.jcgl.entity;
 import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableId;
+import com.baomidou.mybatisplus.annotation.TableName;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.experimental.Accessors;
@@ -21,6 +22,7 @@ import java.io.Serializable;
 @Data
 @EqualsAndHashCode(callSuper = false)
 @Accessors(chain = true)
+
 public class SysUser implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -53,39 +55,17 @@ public class SysUser implements Serializable {
      */
 
     private String userStatus;
-
-
+    /**
+     * 用户学校信息
+     */
     @TableField(exist = false)
-    private String schoolName;
-
-    public String getSchoolName() {
-        return schoolName;
-    }
-
-    public void setSchoolName(String schoolName) {
-        this.schoolName = schoolName;
-    }
+    private SysSchool sysSchool;
+    /**
+     * 用户角色信息
+     */
+    @TableField(exist = false)
+    private SysRole sysRole;
 
 
 
-    public SysUser() {
-    }
-
-
-    public SysUser(Integer userId, Integer schoolId, Integer roleId, String userName, String userStatus) {
-        this.userId = userId;
-        this.schoolId = schoolId;
-        this.roleId = roleId;
-        this.userName = userName;
-        this.userStatus = userStatus;
-    }
-
-    public SysUser(Integer userId, Integer schoolId, Integer roleId, String userName, String userStatus, String schoolName) {
-        this.userId = userId;
-        this.schoolId = schoolId;
-        this.roleId = roleId;
-        this.userName = userName;
-        this.userStatus = userStatus;
-        this.schoolName = schoolName;
-    }
 }

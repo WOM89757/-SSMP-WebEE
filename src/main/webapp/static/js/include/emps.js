@@ -8,9 +8,9 @@ function build_user_table(result) {
         var empIdTd = $("<td></td>").append(item.userId);
         var empNameTd = $("<td></td>").append(item.userName);
         var genderTd = $("<td></td>").append(item.gender == "M" ? "男" : "女");
-        var emailTd = $("<td></td>").append(item.email);
+        var emailTd = $("<td></td>").append(item.sysRole.roleName);
        // var deptNameTd = $("<td></td>").append(item.department.deptName);
-        var schoolNameTd = $("<td></td>").append(item.schoolName);
+        var schoolNameTd = $("<td></td>").append(item.sysSchool.schoolName);
         var editBtn = $("<button></button>").addClass("btn btn-primary btn-sm edit_btn")
             .append($("<span></span>").addClass("glyphicon glyphicon-pencil")).append("编辑");
         // 为编辑按钮添加自定义的属性，来表示当前员工的id

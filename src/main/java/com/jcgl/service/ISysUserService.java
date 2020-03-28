@@ -15,14 +15,29 @@ import com.baomidou.mybatisplus.extension.service.IService;
  */
 public interface ISysUserService extends IService<SysUser> {
 
+    /**
+     * 通过Id查询用户及学校角色信息
+     * @param id
+     * @return
+     */
+    SysUser selectLinkById(Integer id);
+
+    /**
+     * 获取用户信息及其学校和角色信息
+     * @param pageNum 查询页码数
+     * @param wrapper 查询条件
+     * @return    页面信息
+     */
     PageInfo<SysUser> getUserSchool(Integer pageNum,Wrapper<SysUser> wrapper);
-    SysUser getByIdWithSchool(Wrapper<SysUser> wrapper);
 
-    PageInfo<SysUser> getAll(Integer pageNum);
 
+    /**
+     * 检查用户名是否存在
+     * @param userName
+     * @return
+     */
     boolean checkUser(String userName);
 
-    void saveUser(SysUser sysUser);
 
 
 }

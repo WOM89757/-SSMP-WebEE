@@ -21,34 +21,19 @@ import java.util.List;
  * @since 2020-03-24
  */
 public interface SysUserMapper extends BaseMapper<SysUser> {
-
     /**
-     * <p>
-     * 查询 : 根据state状态查询用户列表，分页显示
-     * </p>
-     *
-     * @param page 分页对象,xml中可以从里面进行取值,传递参数 Page 即自动分页,必须放在第一位(你可以继承Page实现自己的分页对象)
-     * @param state 状态
-     * @return 分页对象
-     */
-    IPage<SysUser> selectPageVo(Page<?> page, Integer state);
-
-    /**
-     *
-     * @param example
+     * 通过id查询用户、学校、角色信息
+     * @param id
      * @return
      */
-    //List<Employee> selectByExampleWithDept(EmployeeExample example);
+    SysUser selectLinkById(Integer id);
 
-    SysUser selectByPrimaryKeyWithDept(Integer userId);
-
-    @Select("SELECT sys_user.*,sys_school.school_name FROM sys_user LEFT JOIN sys_school on sys_user.school_id=sys_school.school_id ${ew.customSqlSegment}")
+    /**
+     * 查询所有用户信息及学校、角色
+     * @param queryWrapper  查询添加 可为null
+     * @return SysUser 列表
+     */
     List<SysUser> getUserSchool(@Param(Constants.WRAPPER) Wrapper<SysUser> queryWrapper);
-    @Select("SELECT sys_user.*,sys_school.school_name FROM sys_user LEFT JOIN sys_school on sys_user.school_id=sys_school.school_id ${ew.customSqlSegment}")
-    SysUser getUserBYIdWithSchool(@Param(Constants.WRAPPER) Wrapper<SysUser> queryWrapper);
 
-    List<SysUser> selectByExampleWithSchool(QueryWrapper queryWrapper);
-
-    SysUser selectByPrimaryKeyWithSchool(Integer empId);
 
 }
