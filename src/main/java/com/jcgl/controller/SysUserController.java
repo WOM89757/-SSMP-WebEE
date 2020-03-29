@@ -1,16 +1,13 @@
 package com.jcgl.controller;
 
 
-import com.baomidou.mybatisplus.core.conditions.Wrapper;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
-import com.baomidou.mybatisplus.core.metadata.IPage;
-import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.github.pagehelper.PageInfo;
 import com.jcgl.entity.SysUser;
 import com.jcgl.service.ISysUserService;
+import com.jcgl.utils.DataGridView;
 import com.jcgl.utils.Message;
 
-import com.sun.media.jfxmedia.logging.Logger;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.FieldError;
@@ -59,11 +56,12 @@ public class SysUserController {
      * @return
      */
     @RequestMapping("/users")
-    public Message getUsers(@RequestParam(value = "pageNum",defaultValue = "1")Integer pageNum  ){
+    public DataGridView getUsers(@RequestParam(value = "pageNum",defaultValue = "1")Integer pageNum, @RequestParam(value = "limit",defaultValue = "10")Integer limit){
 
        // PageInfo<SysUser> pageInfo = iSysUserService.getAll(pageNum);
-        PageInfo pageInfo = iSysUserService.getUserSchool(pageNum,new  QueryWrapper().orderBy(true,true,"user_id"));
-        return Message.success().add("pageInfo", pageInfo);
+        PageInfo pageInfo = iSysUserService.getUserSchool(pageNum,limit,new  QueryWrapper().orderBy(true,true,"user_id"));
+        //return Message.success().add("pageInfo", pageInfo);
+        return new DataGridView(pageInfo.getTotal(), pageInfo.getList());
     }
     /**
      * 根据id查询用户

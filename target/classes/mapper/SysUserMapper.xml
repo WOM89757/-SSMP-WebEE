@@ -14,50 +14,20 @@
                     select="com.jcgl.mapper.SysRoleMapper.selectById"/>
     </resultMap>
 
-
+    <!--自定义 带学校信息查询员工-->
     <select id="selectLinkById" resultMap="WithschoolResultMap">
         select *
         from sys_user
         where user_id = #{id}
     </select>
+    <!--自定义 带学校信息查询员工-->
     <select id="getUserSchool" resultMap="WithschoolResultMap">
         select *
         from sys_user
        ${ew.customSqlSegment}
     </select>
 
-    <!--自定义 带部门信息查询-->
-    <sql id="WithSchool_Column_List">
-        u.user_id, u.school_id, u.role_id, u.user_name, u.user_status,s.school_id, s.school_type, s.school_name, s.school_alias
-    </sql>
-    <!--自定义 带部门信息查询员工-->
-    <select id="selectByExampleWithSchool" resultMap="WithschoolResultMap">
-        SELECT
-        <if test="distinct">
-            DISTINCT
-        </if>
-        u.user_id, u.school_id, u.role_id, u.user_name, u.user_status,s.school_name
-        FROM sys_user u LEFT JOIN sys_school s
-        ON u.school_id = s.school_id
-        <if test="_parameter != null">
-
-        </if>
-        <if test="orderByClause != null">
-            order by ${orderByClause}
-        </if>
-
-    </select>
-    <select id="selectByPrimaryKeyWithSchool" resultMap="WithschoolResultMap">
-        SELECT
-        <include refid="WithSchool_Column_List"/>
-        FROM sys_user u LEFT JOIN sys_school s
-        ON u.school_id = s.school_id
-        WHERE user_id = #{userId,jdbcType=INTEGER}
-    </select>
 
 
-    <select id="selectPageVo" resultType="com.jcgl.entity.SysUser">
-    SELECT user_id,user_name FROM sys_user WHERE user_status=#{state}
-    </select>
 
 </mapper>
